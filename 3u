@@ -1,0 +1,13 @@
+def save_audio(title, cn_name, cn_audios):
+    try:
+        for index in range(0, len(cn_audios)):
+            # 去除 \u 字符
+            url = cn_audios[index].encode('utf-8').decode("unicode-escape")
+            # 去除 url 左右双引号
+            url = url.strip('"')
+
+            res = requests.get(url, headers=get_headers(), timeout=5)
+            with open(f'./download/{title}/{cn_name}_{index}.mp3', "wb") as f:
+                f.write(res.content)
+    except Exception as e:
+        print(e)
